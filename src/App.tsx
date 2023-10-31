@@ -1,7 +1,11 @@
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './App.css'
-import HomePage from './pages/HomePages'
-import DetailPage from './pages/DetailPages'
+//import HomePage from './pages/HomePages'
+//import DetailPage from './pages/DetailPages'
+import { Suspense, lazy } from 'react'
+
+const HomePage = lazy(() => import('./pages/HomePages') )
+const DetailPage = lazy(() => import('./pages/DetailPages') )
 
 const router = createBrowserRouter([
   {
@@ -20,7 +24,9 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return <RouterProvider router={router} />
+  return <Suspense fallback={<p>Waiting for lazy load</p>}>
+    <RouterProvider router={router} />
+  </Suspense>
 }
 
 export default App
